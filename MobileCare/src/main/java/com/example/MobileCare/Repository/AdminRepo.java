@@ -3,10 +3,10 @@ package com.example.MobileCare.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.MobileCare.Entity.Customer;
+import com.example.MobileCare.Entity.Admin;
 
 @Repository
-public interface CustRepo extends JpaRepository<Customer, Long>{
+public interface AdminRepo extends JpaRepository<Admin, Long>{
 
 	boolean existsByEmail(String email);
 

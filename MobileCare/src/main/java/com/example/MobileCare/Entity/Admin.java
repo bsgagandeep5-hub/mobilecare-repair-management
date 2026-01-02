@@ -1,7 +1,5 @@
 package com.example.MobileCare.Entity;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,11 +8,11 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Customer {
+public class Admin {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long cid;
+	private long aid;
 	private String name;
 	private long phone;
 	private String email;
