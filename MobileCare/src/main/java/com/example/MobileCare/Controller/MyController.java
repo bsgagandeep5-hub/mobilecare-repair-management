@@ -5,10 +5,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.MobileCare.Dto.UserDto;
 import com.example.MobileCare.Service.MyService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -36,5 +39,10 @@ public class MyController {
 	@PostMapping("/signup")
 	public String signUp(@Valid UserDto userDto, BindingResult result) {
 		return service.signUpValidation(userDto,result);
+	}
+	
+	@PostMapping("/login")
+	public String login(@RequestParam("username")String username, @RequestParam("password")String password,HttpSession session, RedirectAttributes attributes) {
+		return service.loginCheck(username,password,session,attributes);
 	}
 }

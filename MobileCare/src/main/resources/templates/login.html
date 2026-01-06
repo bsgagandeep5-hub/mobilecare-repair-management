@@ -46,9 +46,17 @@ body {
 /* HEADING */
 .auth-card h2 {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     color: #0f172a;
     font-weight: 600;
+}
+
+/* ERROR MESSAGE */
+.error-msg {
+    color: red;
+    text-align: center;
+    margin-bottom: 14px;
+    font-size: 14px;
 }
 
 /* INPUTS */
@@ -100,6 +108,11 @@ body {
     <a href="/" class="back-btn">←</a>
 
     <h2>Welcome Back</h2>
+
+    <!-- ERROR MESSAGE FROM BACKEND -->
+    <p class="error-msg" th:text="${message}">
+       
+    </p>
 
     <form action="/login" method="post">
         <input type="text" name="username"
