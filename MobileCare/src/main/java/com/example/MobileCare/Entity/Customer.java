@@ -19,4 +19,5 @@ public class Customer {
 	private long phone;
 	private String email;
 	private String password;
+	private String role;
 }

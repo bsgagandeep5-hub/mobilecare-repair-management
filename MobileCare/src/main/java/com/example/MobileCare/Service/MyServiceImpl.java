@@ -50,6 +50,7 @@ public class MyServiceImpl implements MyService{
 			admin.setName(userDto.getName());
 			admin.setPassword(userDto.getPassword());
 			admin.setPhone(userDto.getPhone());
+			admin.setRole("Admin");
 			adminRepo.save(admin);
 		}
 		return "login.html";

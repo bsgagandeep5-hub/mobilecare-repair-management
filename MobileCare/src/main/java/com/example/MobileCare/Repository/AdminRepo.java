@@ -20,4 +20,6 @@ public interface AdminRepo extends JpaRepository<Admin, Long>{
 
 	Admin findByPhone(String username);
 
+	boolean existsByRole(String string);
+
 }

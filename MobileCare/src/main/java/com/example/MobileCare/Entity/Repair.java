@@ -23,7 +23,9 @@ public class Repair {
 	@ManyToOne
 	private Admin admin;
 	private String issue;
-	private String Brand;
+	private String brand;
 	private String model;
+	private double cost;
+	private String remark;
 	private LocalDate date;
 }
