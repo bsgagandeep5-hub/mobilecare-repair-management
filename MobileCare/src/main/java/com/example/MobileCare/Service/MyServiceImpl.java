@@ -11,6 +11,7 @@ import com.example.MobileCare.Repository.AdminRepo;
 import com.example.MobileCare.Repository.CustRepo;
 import com.example.MobileCare.Repository.RepairRepo;
 
+import ch.qos.logback.core.model.Model;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,7 @@ public class MyServiceImpl implements MyService{
 			customer.setName(userDto.getName());
 			customer.setPassword(userDto.getPassword());
 			customer.setPhone(userDto.getPhone());
+			customer.setRole("CUSTOMER");
 			custRepo.save(customer);
 		}else {
 			Admin admin = new Admin();
@@ -50,23 +52,25 @@ public class MyServiceImpl implements MyService{
 			admin.setName(userDto.getName());
 			admin.setPassword(userDto.getPassword());
 			admin.setPhone(userDto.getPhone());
-			admin.setRole("Admin");
+			admin.setRole("ADMIN");
 			adminRepo.save(admin);
 		}
 		return "login.html";
 	}
 
 	@Override
-	public String loginCheck(String username, String password, HttpSession session,RedirectAttributes attributes) {
+	public String loginCheck(String username, String password, HttpSession session,RedirectAttributes attributes, org.springframework.ui.Model model) {
 		username = username.trim();
 		if(username.contains("@")) {
 			if(custRepo.existsByEmailAndPassword(username,password)) {
 				Customer cust = custRepo.findByEmail(username);
-				session.setAttribute("user" ,cust );
+				session.setAttribute("user" ,cust ); 
+				model.addAttribute("user", cust);
 				return "dashboard.html";
 			}else if(adminRepo.existsByEmailAndPassword(username,password)) {
 				Admin admin = adminRepo.findByEmail(username);
 				session.setAttribute("user", admin);
+				model.addAttribute("user",admin);
 				return "dashboard.html";
 			}else {
 				attributes.addFlashAttribute("message", "* Enter Correct Email and Password");
@@ -75,10 +79,12 @@ public class MyServiceImpl implements MyService{
 		}else if(username.matches("\\d+")) {
 			if(custRepo.existsByPhoneAndPassword(username,password)) {
 				Customer cust = custRepo.findByPhone(username);
+				model.addAttribute("user", cust);
 				session.setAttribute("user", cust);
 				return "dashboard.html";
 			}else if(adminRepo.existsByPhoneAndPassword(username,password)) {
 				Admin admin = adminRepo.findByPhone(username);
+				model.addAttribute("user", admin);
 				session.setAttribute("user", admin);
 				return "dashboard.html";
 			}else {

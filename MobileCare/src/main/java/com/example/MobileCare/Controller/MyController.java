@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.MobileCare.Dto.UserDto;
 import com.example.MobileCare.Service.MyService;
 
+import ch.qos.logback.core.model.Model;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,8 @@ public class MyController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestParam("username")String username, @RequestParam("password")String password,HttpSession session, RedirectAttributes attributes) {
-		return service.loginCheck(username,password,session,attributes);
+	public String login(@RequestParam("username")String username, @RequestParam("password")String password,HttpSession session,
+			RedirectAttributes attributes, org.springframework.ui.Model model) {
+		return service.loginCheck(username,password,session,attributes, model);
 	}
 }

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard | MobileCare</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #f5f7fb;
+  color: #1e293b;
+}
+
+/* NAVBAR */
+.navbar {
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  padding: 16px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.logout {
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* DASHBOARD */
+.dashboard {
+  padding: 60px;
+}
+
+.dashboard h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+/* USER INFO */
+.user-info {
+  background: #ffffff;
+  padding: 20px 30px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  margin: 25px 0 40px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.user-info h2 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.user-info p {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.user-role {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.user-role.admin {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.user-role.customer {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* CARDS */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.card h3 {
+  margin-bottom: 12px;
+  font-size: 20px;
+}
+
+.card p {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.card a {
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #fff;
+  font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">📱 Thirumala Mobiles</div>
+  <a href="/" class="logout">Logout</a>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard">
+  <h1>Dashboard</h1>
+
+  <!-- USER INFO -->
+  <div class="user-info">
+    <div>
+      <h2 th:text="'Welcome, ' + ${user.name}">Welcome, User</h2>
+
+      <p th:if="${user.email != null}"
+         th:text="'Email: ' + ${user.email}">Email</p>
+
+      <p th:if="${user.phone != null}"
+         th:text="'Phone: ' + ${user.phone}">Phone</p>
+    </div>
+
+    <div>
+      <span class="user-role admin"
+            th:if="${user.role == 'ADMIN'}">ADMIN</span>
+
+      <span class="user-role customer"
+            th:if="${user.role == 'CUSTOMER'}">CUSTOMER</span>
+    </div>
+  </div>
+
+  <!-- ================= ADMIN SECTION ================= -->
+  <div class="cards" th:if="${user.role == 'ADMIN'}">
+
+    <div class="card">
+      <h3>➕ Add Repair</h3>
+      <p>Add repair for walk-in or existing customers.</p>
+      <a href="/add-repair">Add Repair</a>
+    </div>
+
+    <div class="card">
+      <h3>🛠 Manage Repairs</h3>
+      <p>Update repair status, cost, and remarks.</p>
+      <a href="/manage-repairs">Manage</a>
+    </div>
+
+    <div class="card">
+      <h3>⏳ Pending Repairs</h3>
+      <p>View repairs that are not yet delivered.</p>
+      <a href="/pending-repairs">View</a>
+    </div>
+
+    <div class="card">
+      <h3>✅ Completed Repairs</h3>
+      <p>View delivered repair history.</p>
+      <a href="/completed-repairs">View</a>
+    </div>
+
+  </div>
+
+  <!-- ================= CUSTOMER SECTION ================= -->
+  <div class="cards" th:if="${user.role == 'CUSTOMER'}">
+
+    <div class="card">
+      <h3>📲 Book Repair</h3>
+      <p>Submit a new repair request.</p>
+      <a href="/book-repair">Book Now</a>
+    </div>
+
+    <div class="card">
+      <h3>🔍 Track Repair</h3>
+      <p>Check the current status of your repair.</p>
+      <a href="/track-repair">Track</a>
+    </div>
+
+    <div class="card">
+      <h3>📜 Repair History</h3>
+      <p>View your previous repairs.</p>
+      <a href="/repair-history">View</a>
+    </div>
+
+    <div class="card">
+      <h3>👤 Profile</h3>
+      <p>View and update your details.</p>
+      <a href="/profile">Profile</a>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
