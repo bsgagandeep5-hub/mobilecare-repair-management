@@ -18,6 +18,6 @@ public interface CustRepo extends JpaRepository<Customer, Long>{
 
 	boolean existsByPhoneAndPassword(String username, String password);
 
-	Customer findByPhone(String username);
+	Customer findByPhone(Long username);
 
 }

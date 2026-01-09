@@ -1,13 +1,16 @@
 package com.example.MobileCare.Controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.MobileCare.Dto.AddRepairDto;
 import com.example.MobileCare.Dto.UserDto;
 import com.example.MobileCare.Service.MyService;
 
@@ -46,5 +49,26 @@ public class MyController {
 	public String login(@RequestParam("username")String username, @RequestParam("password")String password,HttpSession session,
 			RedirectAttributes attributes, org.springframework.ui.Model model) {
 		return service.loginCheck(username,password,session,attributes, model);
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("user");
+		return "redirect:/";
+	}
+	
+	@GetMapping("/dashboard")
+	public String dashboard(HttpSession session, ModelMap map) {
+	    return service.dashboard(session,map);
+	}
+	
+	@GetMapping("/add-repair")
+	public String addRepair() {
+		return "addRepair.html";
+	}
+	
+	@PostMapping("/add-repair")
+	public String addRepair(RedirectAttributes attributes,@ModelAttribute AddRepairDto addRepair, HttpSession session) {
+		return service.addRepair(attributes,addRepair, session);
 	}
 }

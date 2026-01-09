@@ -45,6 +45,42 @@ body {
   font-size: 14px;
 }
 
+/* ================= TOAST MESSAGES ================= */
+.toast {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  min-width: 220px;
+  max-width: 280px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  z-index: 9999;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  animation: slideIn 0.4s ease;
+}
+
+.toast-success {
+  background: #22c55e;
+}
+
+.toast-error {
+  background: #ef4444;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 /* DASHBOARD */
 .dashboard {
   padding: 60px;
@@ -138,10 +174,20 @@ body {
 
 <body>
 
+<!-- ✅ SUCCESS TOAST -->
+<div th:if="${success}" class="toast toast-success" id="toast">
+  <span th:text="${success}"></span>
+</div>
+
+<!-- ❌ ERROR TOAST -->
+<div th:if="${error}" class="toast toast-error" id="toast">
+  <span th:text="${error}"></span>
+</div>
+
 <!-- NAVBAR -->
 <div class="navbar">
   <div class="logo">📱 Thirumala Mobiles</div>
-  <a href="/" class="logout">Logout</a>
+  <a href="/logout" class="logout">Logout</a>
 </div>
 
 <!-- DASHBOARD -->
@@ -228,6 +274,16 @@ body {
   </div>
 
 </div>
+
+<!-- AUTO HIDE TOAST -->
+<script>
+  setTimeout(() => {
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.style.display = 'none';
+    }
+  }, 3000);
+</script>
 
 </body>
 </html>

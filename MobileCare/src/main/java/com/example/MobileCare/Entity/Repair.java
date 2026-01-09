@@ -26,6 +26,7 @@ public class Repair {
 	private String brand;
 	private String model;
 	private double cost;
-	private String remark;
+	private String status;
+	
 	private LocalDate date;
 }

@@ -1,12 +1,17 @@
 package com.example.MobileCare.Service;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.MobileCare.Dto.AddRepairDto;
 import com.example.MobileCare.Dto.UserDto;
 import com.example.MobileCare.Entity.Admin;
 import com.example.MobileCare.Entity.Customer;
+import com.example.MobileCare.Entity.Repair;
 import com.example.MobileCare.Repository.AdminRepo;
 import com.example.MobileCare.Repository.CustRepo;
 import com.example.MobileCare.Repository.RepairRepo;
@@ -78,7 +83,7 @@ public class MyServiceImpl implements MyService{
 			}
 		}else if(username.matches("\\d+")) {
 			if(custRepo.existsByPhoneAndPassword(username,password)) {
-				Customer cust = custRepo.findByPhone(username);
+				Customer cust = custRepo.findByPhone(Long.parseLong(username));
 				model.addAttribute("user", cust);
 				session.setAttribute("user", cust);
 				return "dashboard.html";
@@ -94,6 +99,49 @@ public class MyServiceImpl implements MyService{
 		}
 		attributes.addFlashAttribute("message", "* Invalid Credentials");
 		return "redirect:/login";
+	}
+
+	@Override
+	public String dashboard(HttpSession session, ModelMap map) {
+		Object userObject = session.getAttribute("user"); 
+
+	    if (userObject == null) {
+	        // User is not logged in. Redirect to the login page.
+	        return "redirect:/login"; 
+	    }
+
+	    map.put("user", userObject);
+	    return "dashboard.html";
+	}
+
+	@Override
+	public String addRepair(RedirectAttributes attributes, AddRepairDto addRepair, HttpSession session) {
+		Object userObject = session.getAttribute("user");
+	    if (userObject == null) {
+	        return "redirect:/"; 
+	    }
+		if(!custRepo.existsByPhone(addRepair.getCustPhone())) {
+			Customer customer = new Customer();
+			customer.setName(addRepair.getCustName());
+			customer.setPhone(addRepair.getCustPhone());
+			customer.setPassword(addRepair.getCustName()+"@123");
+			customer.setRole("CUSTOMER");
+			custRepo.save(customer);
+		}
+		Customer customer = custRepo.findByPhone(addRepair.getCustPhone());
+		Repair repair = new Repair();
+		repair.setAdmin((Admin)userObject);
+		repair.setBrand(addRepair.getBrand());
+		repair.setCost(addRepair.getCost());
+		repair.setCustomer(customer);
+		repair.setDate(LocalDate.now());
+		repair.setIssue(addRepair.getIssue());
+		repair.setModel(addRepair.getModel());
+		
+		repair.setStatus(addRepair.getStatus());
+		repairRepo.save(repair);
+		attributes.addFlashAttribute("success", "Repair Added Successfully!..");
+		return "redirect:/dashboard";
 	}
 
 }

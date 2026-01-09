@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Repair | MobileCare</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f9;
+        overflow: hidden; /* 🔥 disables scrolling */
+    }
+
+    .container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        background: #ffffff;
+        width: 380px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #2c3e50;
+        font-size: 22px;
+    }
+
+    form input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 13px;
+    }
+
+    form input:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        font-size: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .back-btn {
+        margin-top: 10px;
+        background-color: #6c757d;
+    }
+
+    .back-btn:hover {
+        background-color: #5a6268;
+    }
+</style>
+
+
+</head>
+
+<body>
+
+<div class="container">
+    <div class="card">
+        <h1>Add Repair</h1>
+
+        <form method="post" action="/add-repair">
+            <input type="text" name="custName" placeholder="Customer Name" required>
+
+            <input type="number" name="custPhone" placeholder="Customer Mobile" required>
+
+            <input type="text" name="issue" placeholder="Issue Description" required>
+
+            <input type="text" name="brand" placeholder="Brand Name" required>
+
+            <input type="text" name="model" placeholder="Model Name" required>
+
+            <input type="text" name="cost" placeholder="Repair Cost" required>
+
+            <input type="hidden" name="status" value="Pending">
+
+           
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <a href="/dashboard">
+            <button class="back-btn">Back to Dashboard</button>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
