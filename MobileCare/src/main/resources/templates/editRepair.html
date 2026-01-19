@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div>
+	<h1>Edit Repair</h1>
+	<form action="/edit-repair" method="post">
+	Customer : <input type="text" name="custName" th:value="${repair.customer.name}">
+	Phone : <input type="number" name="custPhone" th:value="${repair.customer.phone}">
+	Issue : <input type="text" name="issue" th:value="${repair.issue}">
+	Brand : <input type="text" name="brand" th:value="${repair.brand}">
+	Model : <input type="text" name="model" th:value="${repair.model}">
+	Cost : <input type="number" name="cost" th:value="${repair.cost}">
+	Status : <input type="text" name="status" th:value="${repair.status}">
+	<button>Edit</button>
+	</form>
+	<a href="/manage-repairs"><button>Back</button></a>
+</div>
+</body>
+</html>

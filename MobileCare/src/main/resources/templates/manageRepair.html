@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div>
+	<h1>Manage repairs</h1>
+	<table>
+		<tr>
+			<th>Customer</th>
+			<th>Issue</th>
+			<th>Brand</th>
+			<th>Model</th>
+			<th>Cost</th>
+			<th>Status</th>
+			<th>Date</th>
+			<th>Actions</th>
+		</tr>
+		
+		<tr th:each="repair : ${repairs}">
+			 <td th:text="${repair.customer.name}"></td>
+			 <td th:text="${repair.issue}"></td>
+			 <td th:text="${repair.brand}"></td>
+			 <td th:text="${repair.model}"></td>
+			 <td th:text="${repair.cost}"></td>
+			 <td th:text="${repair.status}"></td>
+			 <td th:text="${repair.date}"></td>
+			 <td >
+				 <a th:href="@{/edit-repair(rid=${repair.rid})}"><button>Edit</button></a>
+				 <a th:href="@{/delete-repair/{rid}(rid = ${repair.rid})}"><button>Delete</button></a>
+			 </td>
+		</tr>
+	</table>
+	<a href="/dashboard"><button>Back</button></a>
+</div>
+</body>
+</html>

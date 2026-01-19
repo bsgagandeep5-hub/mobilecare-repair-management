@@ -71,4 +71,14 @@ public class MyController {
 	public String addRepair(RedirectAttributes attributes,@ModelAttribute AddRepairDto addRepair, HttpSession session) {
 		return service.addRepair(attributes,addRepair, session);
 	}
+	
+	@GetMapping("/manage-repairs")
+	public String manageRepair(org.springframework.ui.Model model, HttpSession session) {
+		return service.manageRepair(model, session);
+	}
+	
+	@GetMapping("/edit-repair")
+	public String editRepair(@RequestParam("rid") long rid, org.springframework.ui.Model model) {
+		return service.editRepair(rid, model);
+	}
 }

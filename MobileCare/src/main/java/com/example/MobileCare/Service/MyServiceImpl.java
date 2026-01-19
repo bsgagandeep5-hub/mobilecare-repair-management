@@ -1,6 +1,7 @@
 package com.example.MobileCare.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -142,6 +143,24 @@ public class MyServiceImpl implements MyService{
 		repairRepo.save(repair);
 		attributes.addFlashAttribute("success", "Repair Added Successfully!..");
 		return "redirect:/dashboard";
+	}
+
+	@Override
+	public String manageRepair(org.springframework.ui.Model model, HttpSession session) {
+		Admin admin =(Admin) session.getAttribute("user");
+		if (admin == null) {
+	        return "redirect:/"; 
+	    }
+		List<Repair> repairs = repairRepo.findAllByAdmin(admin);
+		model.addAttribute("repairs", repairs);
+		return "manageRepair.html";
+	}
+
+	@Override
+	public String editRepair(long rid, org.springframework.ui.Model model) {
+		Repair repair = repairRepo.findById(rid).get();
+		model.addAttribute("repair", repair);
+		return "editRepair.html";
 	}
 
 }
