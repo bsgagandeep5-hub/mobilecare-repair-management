@@ -25,4 +25,8 @@ public interface MyService {
 
 	String editRepair(long rid, org.springframework.ui.Model model);
 
+	String editRepair(RedirectAttributes attributes, AddRepairDto addRepair, HttpSession session);
+
+	String delteRepair(long rid, RedirectAttributes attributes);
+
 }

@@ -1,39 +1,173 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Manage Repairs</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#f5f7fb;
+  color:#1e293b;
+  padding:50px;
+}
+
+/* PAGE TITLE */
+h1{
+  margin-bottom:25px;
+}
+
+/* TABLE CARD */
+.table-card{
+  background:#fff;
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.08);
+  overflow-x:auto;
+}
+
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:#f1f5f9;
+  padding:12px;
+  text-align:left;
+  font-size:14px;
+}
+
+td{
+  padding:12px;
+  border-bottom:1px solid #e2e8f0;
+  font-size:14px;
+}
+
+tr:hover{
+  background:#f9fafb;
+}
+
+/* BUTTONS */
+.btn{
+  padding:6px 12px;
+  border:none;
+  border-radius:6px;
+  font-size:13px;
+  cursor:pointer;
+  text-decoration:none;
+  color:white;
+}
+
+.edit{
+  background:#2563eb;
+}
+
+.delete{
+  background:#ef4444;
+}
+
+.back-btn{
+  margin-top:20px;
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:8px;
+  background:#2563eb;
+  color:white;
+  text-decoration:none;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  top:25px;
+  right:25px;
+  min-width:220px;
+  padding:14px 18px;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:500;
+  color:#fff;
+  z-index:9999;
+  box-shadow:0 12px 25px rgba(0,0,0,0.15);
+  animation:slideIn 0.4s ease;
+}
+
+.toast-success{ background:#22c55e; }
+.toast-error{ background:#ef4444; }
+
+@keyframes slideIn{
+  from{ transform:translateX(100%); opacity:0; }
+  to{ transform:translateX(0); opacity:1; }
+}
+</style>
 </head>
+
 <body>
-<div>
-	<h1>Manage repairs</h1>
-	<table>
-		<tr>
-			<th>Customer</th>
-			<th>Issue</th>
-			<th>Brand</th>
-			<th>Model</th>
-			<th>Cost</th>
-			<th>Status</th>
-			<th>Date</th>
-			<th>Actions</th>
-		</tr>
-		
-		<tr th:each="repair : ${repairs}">
-			 <td th:text="${repair.customer.name}"></td>
-			 <td th:text="${repair.issue}"></td>
-			 <td th:text="${repair.brand}"></td>
-			 <td th:text="${repair.model}"></td>
-			 <td th:text="${repair.cost}"></td>
-			 <td th:text="${repair.status}"></td>
-			 <td th:text="${repair.date}"></td>
-			 <td >
-				 <a th:href="@{/edit-repair(rid=${repair.rid})}"><button>Edit</button></a>
-				 <a th:href="@{/delete-repair/{rid}(rid = ${repair.rid})}"><button>Delete</button></a>
-			 </td>
-		</tr>
-	</table>
-	<a href="/dashboard"><button>Back</button></a>
+
+<!-- SUCCESS TOAST -->
+<div th:if="${success}" class="toast toast-success" id="toast">
+  <span th:text="${success}"></span>
 </div>
+
+<!-- ERROR TOAST -->
+<div th:if="${error}" class="toast toast-error" id="toast">
+  <span th:text="${error}"></span>
+</div>
+
+<h1>Manage Repairs</h1>
+
+<div class="table-card">
+<table>
+<tr>
+<th>Customer</th>
+<th>Issue</th>
+<th>Brand</th>
+<th>Model</th>
+<th>Cost</th>
+<th>Status</th>
+<th>Date</th>
+<th>Actions</th>
+</tr>
+
+<tr th:each="repair : ${repairs}">
+<td th:text="${repair.customer.name}"></td>
+<td th:text="${repair.issue}"></td>
+<td th:text="${repair.brand}"></td>
+<td th:text="${repair.model}"></td>
+<td th:text="${repair.cost}"></td>
+<td th:text="${repair.status}"></td>
+<td th:text="${repair.date}"></td>
+<td>
+<a th:href="@{/edit-repair(rid=${repair.rid})}" class="btn edit">Edit</a>
+<a th:href="@{/delete-repair/{rid}(rid=${repair.rid})}" 
+   class="btn delete"
+   onclick="return confirm('Are you sure to delete this repair?');">
+Delete
+</a>
+</td>
+</tr>
+
+</table>
+</div>
+
+<a href="/dashboard" class="back-btn">Back</a>
+
+<script>
+setTimeout(() => {
+  const toast = document.getElementById('toast');
+  if (toast) toast.style.display = 'none';
+}, 3000);
+</script>
+
 </body>
 </html>

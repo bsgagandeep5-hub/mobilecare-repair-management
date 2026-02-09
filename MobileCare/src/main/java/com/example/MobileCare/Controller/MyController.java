@@ -5,6 +5,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -80,5 +81,15 @@ public class MyController {
 	@GetMapping("/edit-repair")
 	public String editRepair(@RequestParam("rid") long rid, org.springframework.ui.Model model) {
 		return service.editRepair(rid, model);
+	}
+	
+	@PostMapping("/edit-repair")
+	public String editRepair(RedirectAttributes attributes, @ModelAttribute AddRepairDto addRepair, HttpSession session) {
+		return service.editRepair(attributes, addRepair, session);
+	}
+	
+	@GetMapping("/delete-repair/{rid}")
+	public String deleteRepair(@PathVariable("rid")long rid, RedirectAttributes attributes) {
+		return service.delteRepair(rid, attributes);
 	}
 }

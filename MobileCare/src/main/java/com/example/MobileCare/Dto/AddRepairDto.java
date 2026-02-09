@@ -10,6 +10,7 @@ import lombok.Data;
 @Component
 public class AddRepairDto {
 
+	private long rid;
 	private String custName;
 	private long custPhone;
 	private String issue;

@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.MobileCare.Dto.AddRepairDto;
@@ -161,6 +163,38 @@ public class MyServiceImpl implements MyService{
 		Repair repair = repairRepo.findById(rid).get();
 		model.addAttribute("repair", repair);
 		return "editRepair.html";
+	}
+
+	@Override
+	public String editRepair(RedirectAttributes attributes, AddRepairDto addRepair, HttpSession session) {
+		Object admin = session.getAttribute("user");
+		if(admin==null) {
+			return "redirect:/";
+		}
+		Repair repair1 = repairRepo.getById(addRepair.getRid());
+		LocalDate date = repair1.getDate();
+		Repair repair = new Repair();
+		repair.setRid(addRepair.getRid());
+		repair.setAdmin((Admin)admin);
+		repair.setBrand(addRepair.getBrand());
+		repair.setCost(addRepair.getCost());
+		Customer customer = custRepo.findByPhone(addRepair.getCustPhone());
+		repair.setCustomer(customer);
+		repair.setDate(date);
+		repair.setIssue(addRepair.getIssue());
+		repair.setModel(addRepair.getModel());
+		repair.setStatus(addRepair.getStatus());
+		repairRepo.save(repair);
+		attributes.addFlashAttribute("success", "Repair Edited Success!");
+		return "redirect:/manage-repairs";
+	}
+
+	@Override
+	public String delteRepair(long rid, RedirectAttributes attributes) {
+		Repair repair  = repairRepo.getById(rid);
+		repairRepo.delete(repair);
+		attributes.addFlashAttribute("success", "Repair Deleted Successfully!");
+		return "redirect:/manage-repairs";
 	}
 
 }
