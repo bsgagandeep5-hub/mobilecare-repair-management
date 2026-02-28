@@ -15,4 +15,9 @@ public interface RepairRepo extends JpaRepository<Repair, Long>{
 	
 	@Query("select r from Repair r where r.admin = :admin order by r.date desc")
 	List<Repair> findAllByAdmin(@Param("admin")Admin admin);
+
+	@Query("select r from Repair r where r.admin = :admin and r.status = 'Pending' order by r.date desc")
+	List<Repair> getByAdmin(Object admin);
+
+	List<Repair> findByAdminAndStatus(Object admin, String status);
 }

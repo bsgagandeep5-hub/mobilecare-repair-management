@@ -92,4 +92,14 @@ public class MyController {
 	public String deleteRepair(@PathVariable("rid")long rid, RedirectAttributes attributes) {
 		return service.delteRepair(rid, attributes);
 	}
+	
+	@GetMapping("/pending-repairs")
+	public String pendingRepairs(HttpSession session,org.springframework.ui.Model model) {
+		return service.pendingRepairs(session, model);
+	}
+	
+	@GetMapping("/completed-repairs")
+	public String completedRepairs(HttpSession session, ModelMap map) {
+		return service.completedRepairs(session,map);
+	}
 }

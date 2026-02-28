@@ -29,4 +29,8 @@ public interface MyService {
 
 	String delteRepair(long rid, RedirectAttributes attributes);
 
+	String pendingRepairs(HttpSession session, org.springframework.ui.Model model);
+
+	String completedRepairs(HttpSession session, ModelMap map);
+
 }

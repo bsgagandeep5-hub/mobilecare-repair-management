@@ -197,4 +197,26 @@ public class MyServiceImpl implements MyService{
 		return "redirect:/manage-repairs";
 	}
 
+	@Override
+	public String pendingRepairs(HttpSession session, org.springframework.ui.Model model) {
+		Object admin = session.getAttribute("user");
+		if(admin==null) {
+			return "redirect:/";
+		}
+		List<Repair> repairs = repairRepo.getByAdmin(admin);
+		model.addAttribute("repairs", repairs);
+		return "pendingRepairs.html";
+	}
+
+	@Override
+	public String completedRepairs(HttpSession session, ModelMap map) {
+		Object admin = session.getAttribute("user");
+		if(admin == null) {
+			return "redirect:/";
+		}
+		List<Repair> repairs = repairRepo.findByAdminAndStatus(admin,"Completed");
+		map.put("repairs", repairs);
+		return "completedRepairs.html";
+	}
+
 }

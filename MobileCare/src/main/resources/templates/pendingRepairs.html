@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Pending Repairs</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#f5f7fb;
+  padding:50px;
+  color:#1e293b;
+}
+
+h2{
+  margin-bottom:20px;
+}
+
+.table-card{
+  background:#fff;
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.08);
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:#f1f5f9;
+  padding:12px;
+  text-align:left;
+  font-size:14px;
+}
+
+td{
+  padding:12px;
+  border-bottom:1px solid #e2e8f0;
+  font-size:14px;
+}
+
+tr:hover{
+  background:#f9fafb;
+}
+
+.status-badge{
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:500;
+  background:#facc15;
+  color:#78350f;
+}
+
+.complete-btn{
+  padding:6px 12px;
+  border:none;
+  border-radius:6px;
+  background:#22c55e;
+  color:white;
+  cursor:pointer;
+  font-size:13px;
+  text-decoration:none;
+}
+.back-btn{
+  margin-top:20px;
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:8px;
+  background:#2563eb;
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Pending Repairs</h2>
+
+<div class="table-card">
+<table>
+
+<tr>
+<th>Customer</th>
+<th>Issue</th>
+<th>Brand</th>
+<th>Model</th>
+<th>Cost</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+<tr th:each="repair : ${repairs}">
+<td th:text="${repair.customer.name}"></td>
+<td th:text="${repair.issue}"></td>
+<td th:text="${repair.brand}"></td>
+<td th:text="${repair.model}"></td>
+<td th:text="${repair.cost}"></td>
+
+<td>
+   <span class="status-badge" th:text="${repair.status}"></span>
+</td>
+
+<td>
+   <a th:href="@{/complete-repair/{rid}(rid=${repair.rid})}"
+      class="complete-btn"
+      onclick="return confirm('Mark this repair as completed?');">
+      Mark as Completed
+   </a>
+</td>
+
+</tr>
+
+</table>
+<a href="/dashboard" class="back-btn">Back</a>
+</div>
+
+</body>
+</html>
