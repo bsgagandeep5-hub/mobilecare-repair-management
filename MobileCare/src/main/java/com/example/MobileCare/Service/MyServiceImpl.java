@@ -118,10 +118,13 @@ public class MyServiceImpl implements MyService{
 	}
 
 	@Override
-	public String addRepair(RedirectAttributes attributes, AddRepairDto addRepair, HttpSession session) {
+	public String addRepair(RedirectAttributes attributes, AddRepairDto addRepair,BindingResult result, HttpSession session) {
 		Object userObject = session.getAttribute("user");
 	    if (userObject == null) {
 	        return "redirect:/"; 
+	    }
+	    if(result.hasErrors()) {
+	    	return "addRepair.html";
 	    }
 		if(!custRepo.existsByPhone(addRepair.getCustPhone())) {
 			Customer customer = new Customer();
@@ -140,7 +143,6 @@ public class MyServiceImpl implements MyService{
 		repair.setDate(LocalDate.now());
 		repair.setIssue(addRepair.getIssue());
 		repair.setModel(addRepair.getModel());
-		
 		repair.setStatus(addRepair.getStatus());
 		repairRepo.save(repair);
 		attributes.addFlashAttribute("success", "Repair Added Successfully!..");

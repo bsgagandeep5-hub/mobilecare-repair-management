@@ -18,6 +18,7 @@ import lombok.Data;
 public class UserDto {
 	
 	@NotBlank(message = "* Name is required")
+	@Pattern(regexp = "^[A-Za-z ]+$", message = "* Only alphabets allowed")
 	@Size(min = 3, max = 25, message=  "* Enter between 3~25 characters")
 	private String name;
 	

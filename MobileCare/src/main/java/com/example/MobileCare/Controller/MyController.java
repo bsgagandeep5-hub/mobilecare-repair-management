@@ -64,13 +64,13 @@ public class MyController {
 	}
 	
 	@GetMapping("/add-repair")
-	public String addRepair() {
+	public String addRepair(AddRepairDto addRepairDto) {
 		return "addRepair.html";
 	}
 	
 	@PostMapping("/add-repair")
-	public String addRepair(RedirectAttributes attributes,@ModelAttribute AddRepairDto addRepair, HttpSession session) {
-		return service.addRepair(attributes,addRepair, session);
+	public String addRepair(RedirectAttributes attributes,@Valid@ModelAttribute AddRepairDto addRepair,BindingResult result, HttpSession session) {
+		return service.addRepair(attributes,addRepair,result, session);
 	}
 	
 	@GetMapping("/manage-repairs")
@@ -84,7 +84,7 @@ public class MyController {
 	}
 	
 	@PostMapping("/edit-repair")
-	public String editRepair(RedirectAttributes attributes, @ModelAttribute AddRepairDto addRepair, HttpSession session) {
+	public String editRepair(RedirectAttributes attributes,@ModelAttribute AddRepairDto addRepair,BindingResult result, HttpSession session) {
 		return service.editRepair(attributes, addRepair, session);
 	}
 	

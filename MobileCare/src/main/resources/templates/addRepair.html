@@ -76,6 +76,12 @@
     .back-btn:hover {
         background-color: #5a6268;
     }
+    .error {
+    color: #dc2626;
+    font-size: 12px;
+    margin-bottom: 6px;
+    display: block;
+}
 </style>
 
 
@@ -87,24 +93,30 @@
     <div class="card">
         <h1>Add Repair</h1>
 
-        <form method="post" action="/add-repair">
-            <input type="text" name="custName" placeholder="Customer Name" required>
+        <form method="post" action="/add-repair" th:object="${addRepairDto}">
+            <input type="text" th:field="*{custName}" placeholder="Customer Name" required>
+            <span class="error" th:errors="*{custName}"></span>
+            
+            <input type="number" th:field="*{custPhone}" placeholder="Customer Mobile" required>
+            <span class="error" th:errors="*{custPhone}"></span>
+            
+            <input type="text" th:field="*{issue}" placeholder="Issue Description" required>
+            <span class="error" th:errors="*{issue}"></span>
+            
+            <input type="text" th:field="*{brand}" placeholder="Brand Name" required>
+            <span class="error" th:errors="*{brand}"></span>
 
-            <input type="number" name="custPhone" placeholder="Customer Mobile" required>
-
-            <input type="text" name="issue" placeholder="Issue Description" required>
-
-            <input type="text" name="brand" placeholder="Brand Name" required>
-
-            <input type="text" name="model" placeholder="Model Name" required>
-
-            <input type="text" name="cost" placeholder="Repair Cost" required>
-
-            <input type="hidden" name="status" value="Pending">
-
+            <input type="text" th:field="*{model}" placeholder="Model Name" required>
+            <span class="error" th:errors="*{model}"></span>
+            
+            <input type="text" th:field="*{cost}" placeholder="Repair Cost" required>
+            <span class="error" th:errors="*{cost}"></span>
+            
+            <input type="hidden" th:field="*{status}" >
+            <span class="error" th:errors="*{status}"></span>
            
 
-            <button type="submit">Submit</button>
+            <button type="submit">Add</button>
         </form>
 
         <a href="/dashboard">

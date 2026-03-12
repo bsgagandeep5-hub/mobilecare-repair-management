@@ -19,7 +19,7 @@ public interface MyService {
 
 	String dashboard(HttpSession session, ModelMap map);
 
-	String addRepair(RedirectAttributes attributes, AddRepairDto addRepair, HttpSession session);
+	String addRepair(RedirectAttributes attributes, AddRepairDto addRepair, BindingResult result, HttpSession session);
 
 	String manageRepair(org.springframework.ui.Model model,HttpSession session);
 
