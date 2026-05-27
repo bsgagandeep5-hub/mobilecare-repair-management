@@ -98,6 +98,7 @@ tr:hover{
 <table>
 
 <tr>
+	<th>RepairId</th>
 <th>Customer</th>
 <th>Issue</th>
 <th>Brand</th>
@@ -108,6 +109,7 @@ tr:hover{
 </tr>
 
 <tr th:each="repair : ${repairs}">
+	<td th:text="${repair.repairId }"></td>
 <td th:text="${repair.customer.name}"></td>
 <td th:text="${repair.issue}"></td>
 <td th:text="${repair.brand}"></td>

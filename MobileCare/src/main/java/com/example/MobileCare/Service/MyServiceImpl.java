@@ -1,6 +1,7 @@
 package com.example.MobileCare.Service;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -130,7 +131,7 @@ public class MyServiceImpl implements MyService{
 			Customer customer = new Customer();
 			customer.setName(addRepair.getCustName());
 			customer.setPhone(addRepair.getCustPhone());
-			customer.setPassword(addRepair.getCustName()+"@123");
+			customer.setPassword(addRepair.getCustName().substring(0,3)+"@123");
 			customer.setRole("CUSTOMER");
 			custRepo.save(customer);
 		}
@@ -145,7 +146,11 @@ public class MyServiceImpl implements MyService{
 		repair.setModel(addRepair.getModel());
 		repair.setStatus(addRepair.getStatus());
 		repairRepo.save(repair);
-		attributes.addFlashAttribute("success", "Repair Added Successfully!..");
+		Long id = repair.getRid();
+		String repairId = "TH-"+Year.now().getValue()+"-"+String.format("%05d", id);
+		repair.setRepairId(repairId);
+		repairRepo.save(repair);
+		attributes.addFlashAttribute("success", "Repair Added Successfully, RepairId is "+repairId);
 		return "redirect:/dashboard";
 	}
 

@@ -51,7 +51,7 @@ body {
   top: 25px;
   right: 25px;
   min-width: 220px;
-  max-width: 280px;
+  max-width: 350px;
   padding: 14px 18px;
   border-radius: 10px;
   font-size: 14px;
@@ -60,6 +60,11 @@ body {
   z-index: 9999;
   box-shadow: 0 12px 25px rgba(0,0,0,0.15);
   animation: slideIn 0.4s ease;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 }
 
 .toast-success {
@@ -68,6 +73,15 @@ body {
 
 .toast-error {
   background: #ef4444;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 @keyframes slideIn {
@@ -175,13 +189,23 @@ body {
 <body>
 
 <!-- ✅ SUCCESS TOAST -->
-<div th:if="${success}" class="toast toast-success" id="toast">
+<div th:if="${success}" class="toast toast-success">
   <span th:text="${success}"></span>
+
+  <button class="close-btn"
+          onclick="this.parentElement.style.display='none'">
+      ✖
+  </button>
 </div>
 
 <!-- ❌ ERROR TOAST -->
-<div th:if="${error}" class="toast toast-error" id="toast">
+<div th:if="${error}" class="toast toast-error">
   <span th:text="${error}"></span>
+
+  <button class="close-btn"
+          onclick="this.parentElement.style.display='none'">
+      ✖
+  </button>
 </div>
 
 <!-- NAVBAR -->
@@ -274,16 +298,6 @@ body {
   </div>
 
 </div>
-
-<!-- AUTO HIDE TOAST -->
-<script>
-  setTimeout(() => {
-    const toast = document.getElementById('toast');
-    if (toast) {
-      toast.style.display = 'none';
-    }
-  }, 3000);
-</script>
 
 </body>
 </html>

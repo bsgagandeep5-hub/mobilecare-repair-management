@@ -10,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
 import lombok.Data;
 
 @Data
@@ -18,8 +17,7 @@ import lombok.Data;
 public class Repair {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rid-gen")
-	@SequenceGenerator(name = "rid-gen", sequenceName = "rid-seq", initialValue = 1, allocationSize = 3)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long rid;
 	@Column(name = "repairId", unique = true)
 	private String repairId;
